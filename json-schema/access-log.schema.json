@@ -1,0 +1,197 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://expediagroup.com/access-log.schema.json",
+    "title": "Simple access log schema",
+    "description": "schema that represents and access log entry with the ability to add additional tags",
+    "type": "object",
+    "definitions": {
+        "header": {
+            "description": "Single header entry",
+            "type": "object",
+            "properties": {
+                "name":{
+                    "description": "Header name",
+                    "type":"string"
+                },
+                "value": {
+                    "description": "Value of the header entry",
+                    "type": "string"
+                }
+            },
+            "required": ["name", "value"]
+        },
+        "headers": {
+            "description": "Headers present in a request or response",
+            "type": "array",
+            "items": {"$ref": "#/definitions/header"},
+            "default": []
+        },
+        "cookie": {
+            "description": "Entry that represents a single cookie",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                }, 
+                "value": {
+                    "type": "string"
+                },
+                "domain":{
+                    "type": "string"
+                },
+                "path":{
+                    "type": "string"
+                },
+                "expires":{
+                    "type": "string"
+                },
+                "size":{
+                    "type": "integer"
+                },
+                "httpOnly":{
+                    "type":"boolean"
+                },
+                "secure":{
+                    "type": "boolean"
+                },
+                "sameSite":{
+                    "type": "string",
+                    "enum": ["none", "lax", "strict"],
+                    "default": "none"
+                }
+            },
+            "required": ["name", "value"]   
+        },
+        "cookies": {
+            "description": "Cookies in request or responses",
+            "type":"array",
+            "items": {"$ref": "#/definitions/cookie"},
+            "default": []
+        },
+        "parameter":{
+            "description": "Parameter entry, typically be query param",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "location":{
+            "description": "Object that can describe a location",
+            "type": "object",
+            "properties": {
+                "latitude" :{
+                    "type": "number"
+                },
+                "longitude" : {
+                    "type": "number"
+                },
+                "city":{
+                    "type": "string"
+                },
+                "region":{
+                    "type": "string"
+                },
+                "country":{
+                    "type": "string"
+                },
+                "asn":{
+                    "type": "number"
+                }
+            },
+            "required": ["latitude", "longitud"]
+        },
+        "tag":{
+            "description": "dimensional data to a log entry, smilar to tag in metrics",
+            "type": "object",
+            "properties": {
+                "name":{
+                    "type":"string"
+                },
+                "value":{
+                    "type": "string"
+                }
+            }
+        },
+        "tags":{
+            "description": "array of tags that can be added to the log entry",
+            "type": "array",
+            "items": {"$ref": "#/definitions/tag"},
+            "default": []
+        }
+    },
+    "properties": {
+        "request":{
+            "type":"object",
+            "properties": {
+                "method" : {
+                    "description": "The http method of the request",
+                    "type": "string"
+                },
+                "uri": {
+                    "description": "The requested URI",
+                    "type": "string"
+                },
+                "protocol": {
+                    "description": "Protocol used for this request",
+                    "type": "string"
+                },
+                "host": {
+                    "description": "Value of the host header",
+                    "type": "string"
+                },
+                "userAgent": {
+                    "description": "User-Agent header",
+                    "type": "string"
+                },
+                "queryParams": {
+                    "description": "Query parameters in the URI",
+                    "type": "array",
+                    "items": {"$ref": "#definitions/parameter"},
+                    "default": []
+                },
+                "headers" : {"$ref": "#/definitions/headers"},
+                "cookies": {"$ref": "#/definitions/cookies"},
+                "bodySize":{
+                    "description": "If available the size of the body in bytes",
+                    "type": "number"
+                },
+                "headerSize":{
+                    "description": "If available the size of the body in bytes",
+                    "type": "number"
+                },
+                "remoteIp": {
+                    "type":"string"
+                }
+            },
+            "required": ["method", "uri", "protocol"]
+        },
+        "response": {
+            "description": "The response for the given request",
+            "type": "object",
+            "properties": {
+                "statusCode":{
+                    "type": "integer",
+                    "description": "HTTP status code"
+                },
+                "headers": {
+                    "description": "response headers",
+                    "$ref": "#/definitions/headers"},
+                "cookies":{
+                    "description": "response set cookies",
+                    "$ref": "#/definitions/cookies"},
+                "bodySize": {
+                    "description": "Size in bytes of the response",
+                    "type": "number"
+                }
+            }
+        },
+        "location": {"$ref": "#/definitions/location"},
+        "tags" : {"$ref": "#/definitions/tags"}
+    },
+    "required": ["request", "response"]
+  }
