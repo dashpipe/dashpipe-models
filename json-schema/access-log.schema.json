@@ -161,7 +161,7 @@
                     "type": "number"
                 },
                 "headerSize":{
-                    "description": "If available the size of the body in bytes",
+                    "description": "If available the size of the header in bytes",
                     "type": "number"
                 },
                 "remoteIp": {
@@ -186,6 +186,9 @@
                     "$ref": "#/definitions/cookies"},
                 "bodySize": {
                     "description": "Size in bytes of the response",
+                    "type": "number"},
+                "headerSize":{
+                    "description": "If available the size of the header in bytes",
                     "type": "number"
                 }
             }
