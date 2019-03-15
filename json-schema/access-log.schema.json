@@ -134,6 +134,10 @@
         "request":{
             "type":"object",
             "properties": {
+                "timestamp": {
+                    "description": "Time in UTC of the request",
+                    "type": "number"
+                },
                 "method" : {
                     "description": "The http method of the request",
                     "type": "string"
@@ -175,6 +179,10 @@
             "description": "The response for the given request",
             "type": "object",
             "properties": {
+                "responseTime": {
+                    "description": "Time it took for response to return",
+                    "type": "number"
+                },
                 "statusCode":{
                     "type": "integer",
                     "description": "HTTP status code"
