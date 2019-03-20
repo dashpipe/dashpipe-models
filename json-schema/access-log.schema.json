@@ -32,7 +32,7 @@
             "properties": {
                 "name": {
                     "type": "string"
-                }, 
+                },
                 "value": {
                     "type": "string"
                 },
@@ -60,7 +60,7 @@
                     "default": "none"
                 }
             },
-            "required": ["name", "value"]   
+            "required": ["name", "value"]
         },
         "cookies": {
             "description": "Cookies in request or responses",
@@ -68,7 +68,7 @@
             "items": {"$ref": "#/definitions/cookie"},
             "default": []
         },
-        "parameter":{
+        "queryParam":{
             "description": "Parameter entry, typically be query param",
             "type": "object",
             "properties": {
@@ -79,6 +79,12 @@
                     "type": "string"
                 }
             }
+        },
+        "queryParams": {
+            "description": "Query parameters in the URI",
+            "type": "array",
+            "items": {"$ref": "#/definitions/queryParam"},
+            "default": []
         },
         "location":{
             "description": "Object that can describe a location",
@@ -103,7 +109,7 @@
                     "type": "number"
                 }
             },
-            "required": ["latitude", "longitud"]
+            "required": ["latitude", "longitude"]
         },
         "tag":{
             "description": "dimensional data to a log entry, smilar to tag in metrics",
@@ -128,6 +134,10 @@
         "request":{
             "type":"object",
             "properties": {
+                "timestamp": {
+                    "description": "Time in UTC of the request",
+                    "type": "number"
+                },
                 "method" : {
                     "description": "The http method of the request",
                     "type": "string"
@@ -148,12 +158,7 @@
                     "description": "User-Agent header",
                     "type": "string"
                 },
-                "queryParams": {
-                    "description": "Query parameters in the URI",
-                    "type": "array",
-                    "items": {"$ref": "#definitions/parameter"},
-                    "default": []
-                },
+                "queryParams": {"$ref": "#/definitions/queryParams"},
                 "headers" : {"$ref": "#/definitions/headers"},
                 "cookies": {"$ref": "#/definitions/cookies"},
                 "bodySize":{
@@ -174,6 +179,10 @@
             "description": "The response for the given request",
             "type": "object",
             "properties": {
+                "responseTime": {
+                    "description": "Time it took for response to return",
+                    "type": "number"
+                },
                 "statusCode":{
                     "type": "integer",
                     "description": "HTTP status code"
