@@ -182,7 +182,7 @@
             "type": "object",
             "properties": {
                 "responseTime": {
-                    "description": "Time it took for response to return",
+                    "description": "Time it took for response to return use unix epoch time ms",
                     "type": "number"
                 },
                 "statusCode":{
@@ -202,7 +202,8 @@
                     "description": "If available the size of the header in bytes",
                     "type": "number"
                 }
-            }
+            },
+            "required": ["responseTime", "statusCode"]
         },
         "location": {"$ref": "#/definitions/location"},
         "tags" : {"$ref": "#/definitions/tags"}
