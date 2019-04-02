@@ -78,7 +78,8 @@
                 "value": {
                     "type": "string"
                 }
-            }
+            },
+            "required": ["name", "value"]
         },
         "queryParams": {
             "description": "Query parameters in the URI",
@@ -121,7 +122,8 @@
                 "value":{
                     "type": "string"
                 }
-            }
+            },
+            "required": ["name", "value"]
         },
         "tags":{
             "description": "array of tags that can be added to the log entry",
