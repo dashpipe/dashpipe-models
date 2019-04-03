@@ -79,7 +79,7 @@
                     "type": "string"
                 }
             },
-            "required": ["name", "value"]
+            "required": ["name"]
         },
         "queryParams": {
             "description": "Query parameters in the URI",
